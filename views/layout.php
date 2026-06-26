@@ -54,9 +54,8 @@ function frontLayout(string $title, callable $body, array $opts = []): void {
     .site-header-inner{
       max-width:var(--site-max);margin:0 auto;
       padding:10px var(--site-pad);
-      display:grid;
-      grid-template-columns:1fr auto 1fr;
-      align-items:center;gap:16px;
+      display:flex;
+      align-items:center;justify-content:space-between;gap:16px;
     }
     .header-brand{
       display:flex;align-items:center;gap:11px;
@@ -73,7 +72,7 @@ function frontLayout(string $title, callable $body, array $opts = []): void {
 
     .header-nav{
       display:flex;align-items:center;gap:2px;
-      list-style:none;justify-self:center;
+      list-style:none;
     }
     .header-nav a{
       display:inline-flex;align-items:center;gap:4px;
@@ -85,24 +84,6 @@ function frontLayout(string $title, callable $body, array $opts = []): void {
     .header-nav a:hover{color:var(--navy)}
     .header-nav a.active{color:var(--accent);font-weight:600;border-bottom-color:var(--accent)}
     .header-nav .nav-chev{width:12px;height:12px;opacity:.6}
-
-    .header-admin-wrap{
-      justify-self:end;text-align:right;
-      display:flex;flex-direction:column;align-items:flex-end;gap:3px;
-    }
-    .header-admin-btn{
-      display:inline-flex;align-items:center;gap:7px;
-      padding:7px 16px;
-      border:1.5px solid var(--border);
-      border-radius:8px;
-      background:var(--bg2);
-      color:var(--navy);
-      font-size:13px;font-weight:600;
-      text-decoration:none;
-      transition:all var(--r);
-    }
-    .header-admin-btn:hover{border-color:var(--accent);color:var(--accent);background:#F8FAFC}
-    .header-admin-note{font-size:9.5px;color:var(--muted);letter-spacing:.01em}
 
     .chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:600;white-space:nowrap}
     .chip-live{background:#ECFDF5;color:#059669;border:1px solid #A7F3D0}
@@ -118,11 +99,7 @@ function frontLayout(string $title, callable $body, array $opts = []): void {
     @media(prefers-reduced-motion:reduce){.afu{opacity:1;transform:none}}
 
     @media(max-width:960px){
-      .site-header-inner{grid-template-columns:1fr auto;grid-template-rows:auto auto}
       .header-nav{display:none}
-      .header-admin-wrap{grid-column:2;grid-row:1}
-      .header-brand{grid-column:1;grid-row:1}
-      .header-admin-note{display:none}
     }
   </style>
 </head>
@@ -142,24 +119,16 @@ function frontLayout(string $title, callable $body, array $opts = []): void {
     <nav aria-label="Main navigation">
       <ul class="header-nav">
         <li><a href="<?= url('/') ?>" class="<?= $activeNav === 'home' ? 'active' : '' ?>">Home</a></li>
-        <li><a href="<?= url('/#about') ?>" class="<?= $activeNav === 'about' ? 'active' : '' ?>">About</a></li>
+        <li><a href="<?= url('/about') ?>" class="<?= $activeNav === 'about' ? 'active' : '' ?>">About</a></li>
         <li>
-          <a href="<?= url('/#platforms') ?>" class="<?= $activeNav === 'platforms' ? 'active' : '' ?>">
+          <a href="<?= url('/hub/csd') ?>" class="<?= $activeNav === 'platforms' ? 'active' : '' ?>">
             Platforms
             <svg class="nav-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
           </a>
         </li>
-        <li><a href="<?= url('/#contact') ?>">Contact</a></li>
+        <li><a href="<?= url('/about#contact') ?>">Contact</a></li>
       </ul>
     </nav>
-
-    <div class="header-admin-wrap">
-      <a href="<?= url('/admin') ?>" class="header-admin-btn" aria-label="Admin portal login">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Admin Portal
-      </a>
-      <span class="header-admin-note">Authorized personnel access only</span>
-    </div>
   </div>
 </header>
 <?php endif; ?>
