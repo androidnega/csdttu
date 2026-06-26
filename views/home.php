@@ -24,8 +24,8 @@ frontLayout('CS Department Portal', function() use ($exploreUrl) {
 </div>
 
 <div class="home-page-bg">
-  <section class="flex flex-1 items-center page-section" aria-labelledby="intro-h">
-    <div class="site-container grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+  <section class="home-hero-section flex flex-1 items-center page-section" aria-labelledby="intro-h">
+    <div class="site-container grid w-full grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
       <div class="flex flex-col items-start gap-6 max-lg:items-center max-lg:text-center">
         <span class="home-anim ha-d1 eyebrow eyebrow-dark">
           <span class="h-1.5 w-1.5 rounded-full bg-brand" style="animation:home-pulse 2.4s ease-in-out infinite" aria-hidden="true"></span>
@@ -91,7 +91,7 @@ frontLayout('CS Department Portal', function() use ($exploreUrl) {
 }, [
     'noOverflow' => false,
     'activeNav' => 'home',
-    'bodyClass' => 'bg-[#fafbff]',
+    'bodyClass' => 'page-home bg-[#fafbff]',
     'topbar' => true,
     'footer' => true,
 ]);

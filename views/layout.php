@@ -20,7 +20,7 @@ function frontLayout(string $title, callable $body, array $opts = []): void {
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <meta name="description" content="Department of Computer Science, Takoradi Technical University — digital hub for all departmental platforms and student services."/>
   <title><?= esc($title) ?> | CS Dept — TTU</title>
   <link rel="icon" type="image/png" href="<?= esc(siteFaviconUrl()) ?>"/>
@@ -35,7 +35,7 @@ function frontLayout(string $title, callable $body, array $opts = []): void {
 <header class="site-header" role="banner">
   <div class="site-header-inner">
     <a href="<?= url('/') ?>" class="group flex min-w-0 items-center gap-3 no-underline" aria-label="CS Department Portal home">
-      <?= siteLogo(44) ?>
+      <?= siteLogo(58) ?>
       <div class="hidden min-w-0 flex-col gap-0.5 sm:flex">
         <span class="truncate text-sm font-bold leading-tight text-navy group-hover:text-brand">CS Dept &mdash; TTU</span>
         <span class="truncate text-[11px] font-medium leading-tight text-muted">Takoradi Technical University</span>
@@ -75,7 +75,7 @@ function frontLayout(string $title, callable $body, array $opts = []): void {
 </header>
 <?php endif; ?>
 
-<main class="relative z-[1] flex min-h-[calc(100vh-4rem)] flex-col">
+<main class="site-main relative z-[1] flex flex-col">
 <?php $body(); ?>
 </main>
 

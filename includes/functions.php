@@ -52,7 +52,7 @@ function siteLogo(int $height = 48, string $class = 'site-logo'): string {
          . ' src="' . esc(siteLogoUrl()) . '"'
          . ' alt="' . esc(siteLogoAlt()) . '"'
          . ' width="1024" height="1024"'
-         . ' style="height:' . $h . 'px;width:auto;display:block"'
+         . ' style="--logo-h:' . $h . 'px;height:var(--logo-h);width:auto;display:block"'
          . ' loading="eager" decoding="async" draggable="false">';
 }
 
