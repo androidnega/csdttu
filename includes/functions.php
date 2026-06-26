@@ -31,7 +31,19 @@ function siteLogoAlt(): string {
 }
 
 function heroIllustrationUrl(): string {
-    return url('assets/images/itsu-academic-team.png');
+    return url('assets/images/ttu-campus-building.jpg');
+}
+
+function heroIllustrationAlt(): string {
+    return 'Takoradi Technical University campus building';
+}
+
+function homeHeroImageUrl(): string {
+    return heroIllustrationUrl();
+}
+
+function homeHeroImageAlt(): string {
+    return heroIllustrationAlt();
 }
 
 function siteLogo(int $height = 48, string $class = 'site-logo'): string {
@@ -50,6 +62,40 @@ function redirect(string $url): void {
     }
     header('Location: ' . $url);
     exit;
+}
+
+// ──────────────────────────────────────────────────────────────
+//  Tailwind CDN + site assets
+// ──────────────────────────────────────────────────────────────
+function tailwindHead(): string {
+    $css = url('assets/css/site.css');
+    return implode("\n  ", [
+        '<script src="https://cdn.tailwindcss.com"></script>',
+        '<script>',
+        'tailwind.config = {',
+        '  theme: {',
+        '    extend: {',
+        '      colors: {',
+        '        navy: "#0f2d5c",',
+        '        brand: "#2563eb",',
+        '        accent: "#1d4ed8",',
+        '        muted: "#64748b",',
+        '        surface: "#f8fafc",',
+        '      },',
+        '      fontFamily: {',
+        '        sans: ["Inter", "system-ui", "sans-serif"],',
+        '        display: ["Space Grotesk", "Inter", "sans-serif"],',
+        '      },',
+        '    },',
+        '  },',
+        '};',
+        '</script>',
+        '<link rel="stylesheet" href="' . esc($css) . '"/>',
+    ]);
+}
+
+function siteScripts(): string {
+    return '<script src="' . esc(url('assets/js/site.js')) . '"></script>';
 }
 
 function jsonResponse(array $data, int $code = 200): void {

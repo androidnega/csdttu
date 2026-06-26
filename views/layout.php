@@ -4,9 +4,18 @@
  */
 function frontLayout(string $title, callable $body, array $opts = []): void {
     $showTopbar = $opts['topbar'] ?? true;
+    $showFooter = $opts['footer'] ?? true;
     $noOverflow = $opts['noOverflow'] ?? true;
     $activeNav  = $opts['activeNav'] ?? '';
     $bodyClass  = $opts['bodyClass'] ?? '';
+    $overflowClass = $noOverflow ? 'overflow-hidden max-lg:overflow-auto' : 'overflow-x-hidden';
+
+    $navItems = [
+        ['id' => 'home',      'label' => 'Home',      'href' => url('/')],
+        ['id' => 'about',     'label' => 'About',     'href' => url('/about')],
+        ['id' => 'platforms', 'label' => 'Platforms', 'href' => url('/hub/csd')],
+        ['id' => 'contact',   'label' => 'Contact',   'href' => url('/about#contact')],
+    ];
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,134 +27,67 @@ function frontLayout(string $title, callable $body, array $opts = []): void {
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --bg:#F8FAFC;
-      --bg2:#FFFFFF;
-      --text:#1E293B;
-      --muted:#64748B;
-      --border:#E2E8F0;
-      --card:#FFFFFF;
-      --accent:#1D4ED8;
-      --navy:#0F2D5C;
-      --hero-blue:#0B2D6B;
-      --site-max:1200px;
-      --site-pad:clamp(20px,4vw,40px);
-      --r:.2s ease;
-    }
-    html,body{
-      min-height:100%;
-      font-family:'Inter',system-ui,sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      <?= $noOverflow ? 'overflow:hidden;' : 'overflow-x:hidden;' ?>
-      -webkit-font-smoothing:antialiased;
-    }
-    @media(max-width:960px){html,body{overflow:auto!important}}
-    .page-wrap{position:relative;z-index:1}
-
-    /* Shared content width — aligns header, hero, and body */
-    .site-container{
-      width:100%;max-width:var(--site-max);margin:0 auto;
-      padding-inline:var(--site-pad);
-    }
-
-    .site-header{
-      position:sticky;top:0;z-index:100;
-      width:100%;background:var(--bg2);
-      border-bottom:1px solid var(--border);
-      box-shadow:0 1px 4px rgba(15,23,42,.06);
-    }
-    .site-header-inner{
-      display:flex;
-      align-items:center;justify-content:space-between;gap:16px;
-      padding-block:10px;
-    }
-    .header-brand{
-      display:flex;align-items:center;gap:11px;
-      text-decoration:none;justify-self:start;
-    }
-    .site-logo{
-      display:block;flex-shrink:0;height:auto;
-      -webkit-user-select:none;user-select:none;
-      -webkit-user-drag:none;
-    }
-    .header-brand-text{display:flex;flex-direction:column;gap:1px}
-    .header-name{font-size:14px;font-weight:700;color:var(--navy);line-height:1.2}
-    .header-sub{font-size:11px;font-weight:500;color:var(--muted);line-height:1.2}
-
-    .header-nav{
-      display:flex;align-items:center;gap:2px;
-      list-style:none;
-    }
-    .header-nav a{
-      display:inline-flex;align-items:center;gap:4px;
-      padding:8px 14px;font-size:13px;font-weight:500;
-      color:var(--muted);text-decoration:none;
-      border-bottom:2px solid transparent;
-      transition:color var(--r),border-color var(--r);
-    }
-    .header-nav a:hover{color:var(--navy)}
-    .header-nav a.active{color:var(--accent);font-weight:600;border-bottom-color:var(--accent)}
-    .header-nav .nav-chev{width:12px;height:12px;opacity:.6}
-
-    .chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:600;white-space:nowrap}
-    .chip-live{background:#ECFDF5;color:#059669;border:1px solid #A7F3D0}
-    .chip-beta{background:#FFFBEB;color:#D97706;border:1px solid #FDE68A}
-    .chip-soon{background:#F1F5F9;color:#64748B;border:1px solid #E2E8F0}
-    .chip-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
-
-    @keyframes fade-up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-    .afu{opacity:0;animation:fade-up .45s ease forwards}
-    .d0{animation-delay:.04s}.d1{animation-delay:.1s}.d2{animation-delay:.16s}
-    .d3{animation-delay:.22s}.d4{animation-delay:.28s}.d5{animation-delay:.34s}
-    :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-    @media(prefers-reduced-motion:reduce){.afu{opacity:1;transform:none}}
-
-    @media(max-width:960px){
-      .header-nav{display:none}
-    }
-  </style>
+  <?= tailwindHead() ?>
 </head>
-<body<?= $bodyClass ? ' class="' . esc($bodyClass) . '"' : '' ?>>
+<body class="<?= esc(trim($bodyClass . ' ' . $overflowClass)) ?>">
 
 <?php if ($showTopbar): ?>
 <header class="site-header" role="banner">
-  <div class="site-container site-header-inner">
-    <a href="<?= url('/') ?>" class="header-brand" aria-label="CS Department Portal home">
-      <?= siteLogo(52) ?>
-      <div class="header-brand-text">
-        <span class="header-name">CS Dept &mdash; TTU</span>
-        <span class="header-sub">Takoradi Technical University</span>
+  <div class="site-header-inner">
+    <a href="<?= url('/') ?>" class="group flex min-w-0 items-center gap-3 no-underline" aria-label="CS Department Portal home">
+      <?= siteLogo(44) ?>
+      <div class="hidden min-w-0 flex-col gap-0.5 sm:flex">
+        <span class="truncate text-sm font-bold leading-tight text-navy group-hover:text-brand">CS Dept &mdash; TTU</span>
+        <span class="truncate text-[11px] font-medium leading-tight text-muted">Takoradi Technical University</span>
       </div>
     </a>
 
-    <nav aria-label="Main navigation">
-      <ul class="header-nav">
-        <li><a href="<?= url('/') ?>" class="<?= $activeNav === 'home' ? 'active' : '' ?>">Home</a></li>
-        <li><a href="<?= url('/about') ?>" class="<?= $activeNav === 'about' ? 'active' : '' ?>">About</a></li>
+    <nav aria-label="Main navigation" class="hidden lg:flex">
+      <ul class="flex list-none items-center gap-0.5">
+        <?php foreach ($navItems as $item): ?>
         <li>
-          <a href="<?= url('/hub/csd') ?>" class="<?= $activeNav === 'platforms' ? 'active' : '' ?>">
-            Platforms
-            <svg class="nav-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          <a href="<?= esc($item['href']) ?>"
+             class="nav-link <?= $activeNav === $item['id'] ? 'nav-link-active' : '' ?>">
+            <?= esc($item['label']) ?>
           </a>
         </li>
-        <li><a href="<?= url('/about#contact') ?>">Contact</a></li>
+        <?php endforeach; ?>
       </ul>
     </nav>
+
+    <button type="button" id="navToggle" class="btn btn-ghost btn-sm btn-icon lg:hidden" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+    </button>
   </div>
+
+  <nav id="mobileNav" class="mobile-nav-panel" aria-label="Mobile navigation" hidden>
+    <ul class="flex list-none flex-col gap-1">
+      <?php foreach ($navItems as $item): ?>
+      <li>
+        <a href="<?= esc($item['href']) ?>"
+           class="nav-link w-full <?= $activeNav === $item['id'] ? 'nav-link-active' : '' ?>">
+          <?= esc($item['label']) ?>
+        </a>
+      </li>
+      <?php endforeach; ?>
+    </ul>
+  </nav>
 </header>
 <?php endif; ?>
 
-<div class="page-wrap">
+<main class="relative z-[1] flex min-h-[calc(100vh-4rem)] flex-col">
 <?php $body(); ?>
-</div>
+</main>
 
-<script>
-document.addEventListener('contextmenu',function(e){if(e.target.closest('.site-logo'))e.preventDefault()});
-document.addEventListener('dragstart',function(e){if(e.target.closest('.site-logo'))e.preventDefault()});
-</script>
+<?php if ($showFooter): ?>
+<footer class="site-footer" role="contentinfo">
+  <div class="site-container">
+    <p class="truncate whitespace-nowrap">&copy; <?= date('Y') ?> CSD- Takoradi Technical University</p>
+  </div>
+</footer>
+<?php endif; ?>
+
+<?= siteScripts() ?>
 </body>
 </html>
 <?php

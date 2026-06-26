@@ -1,6 +1,11 @@
 # Admin credentials (generated on first login)
 data/settings.json
 
+# Node / Vite
+node_modules/
+.vite-dev
+assets/dist/
+
 # OS / editor
 .DS_Store
 .idea/
