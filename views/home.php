@@ -53,7 +53,7 @@ frontLayout('CS Department Portal', function() use ($exploreUrl) {
           <a href="<?= url('/about') ?>" class="btn btn-ghost w-full sm:w-auto">About the Department</a>
         </div>
 
-        <div class="home-anim ha-d5 flex flex-wrap gap-2 max-lg:justify-center">
+        <div class="home-anim ha-d5 hidden flex-wrap gap-2 sm:flex max-lg:justify-center">
           <span class="tag">Research</span>
           <span class="tag">Innovate</span>
           <span class="tag">Build</span>

@@ -35,10 +35,10 @@ function frontLayout(string $title, callable $body, array $opts = []): void {
 <header class="site-header" role="banner">
   <div class="site-header-inner">
     <a href="<?= url('/') ?>" class="group flex min-w-0 items-center gap-3 no-underline" aria-label="CS Department Portal home">
-      <?= siteLogo(58) ?>
-      <div class="hidden min-w-0 flex-col gap-0.5 sm:flex">
-        <span class="truncate text-sm font-bold leading-tight text-navy group-hover:text-brand">CS Dept &mdash; TTU</span>
-        <span class="truncate text-[11px] font-medium leading-tight text-muted">Takoradi Technical University</span>
+      <?= siteLogo(68) ?>
+      <div class="site-brand-text flex min-w-0 flex-col gap-0.5">
+        <span class="truncate text-xs font-bold leading-tight text-navy group-hover:text-brand sm:text-sm">CS Dept &mdash; TTU</span>
+        <span class="truncate text-[10px] font-medium leading-tight text-muted sm:text-[11px]">Takoradi Technical University</span>
       </div>
     </a>
 
