@@ -18,7 +18,7 @@ frontLayout($hub['title'] . ' Platforms', function() use ($hub, $apps, $liveCoun
   /* ── Hero banner ── */
   .hub-hero{
     background:linear-gradient(135deg,#0F2D5C 0%,#1E40AF 50%,#2563EB 100%);
-    padding:clamp(36px,6vh,56px) var(--site-pad) clamp(32px,5vh,48px);
+    padding-block:clamp(36px,6vh,56px) clamp(32px,5vh,48px);
     position:relative;overflow:hidden;
   }
   .hub-hero::before{
@@ -29,7 +29,6 @@ frontLayout($hub['title'] . ' Platforms', function() use ($hub, $apps, $liveCoun
   }
   .hub-hero-inner{
     position:relative;z-index:1;
-    max-width:var(--site-max);margin:0 auto;
     display:flex;flex-direction:column;gap:20px;
   }
   .hub-crumb{
@@ -70,8 +69,7 @@ frontLayout($hub['title'] . ' Platforms', function() use ($hub, $apps, $liveCoun
 
   /* ── Platforms grid ── */
   .hub-body{
-    max-width:var(--site-max);margin:0 auto;
-    padding:clamp(28px,5vh,40px) var(--site-pad) clamp(40px,6vh,56px);
+    padding-block:clamp(28px,5vh,40px) clamp(40px,6vh,56px);
   }
   .hub-section-head{
     display:flex;align-items:flex-end;justify-content:space-between;
@@ -163,7 +161,8 @@ frontLayout($hub['title'] . ' Platforms', function() use ($hub, $apps, $liveCoun
 
 <div class="hub-page" style="--ca:<?= esc($clr['accent']) ?>;--cr:<?= esc($clr['rgb']) ?>">
   <section class="hub-hero afu d0">
-    <div class="hub-hero-inner">
+    <div class="site-container">
+      <div class="hub-hero-inner">
       <a href="<?= url('/') ?>" class="hub-crumb">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/><path d="M20 12H9"/></svg>
         Back to Portal
@@ -185,7 +184,7 @@ frontLayout($hub['title'] . ' Platforms', function() use ($hub, $apps, $liveCoun
     </div>
   </section>
 
-  <div class="hub-body">
+  <div class="site-container hub-body">
     <div class="hub-section-head afu d2">
       <div>
         <h2>Department Platforms</h2>

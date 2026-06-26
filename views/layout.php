@@ -45,6 +45,12 @@ function frontLayout(string $title, callable $body, array $opts = []): void {
     @media(max-width:960px){html,body{overflow:auto!important}}
     .page-wrap{position:relative;z-index:1}
 
+    /* Shared content width — aligns header, hero, and body */
+    .site-container{
+      width:100%;max-width:var(--site-max);margin:0 auto;
+      padding-inline:var(--site-pad);
+    }
+
     .site-header{
       position:sticky;top:0;z-index:100;
       width:100%;background:var(--bg2);
@@ -52,10 +58,9 @@ function frontLayout(string $title, callable $body, array $opts = []): void {
       box-shadow:0 1px 4px rgba(15,23,42,.06);
     }
     .site-header-inner{
-      max-width:var(--site-max);margin:0 auto;
-      padding:10px var(--site-pad);
       display:flex;
       align-items:center;justify-content:space-between;gap:16px;
+      padding-block:10px;
     }
     .header-brand{
       display:flex;align-items:center;gap:11px;
@@ -107,7 +112,7 @@ function frontLayout(string $title, callable $body, array $opts = []): void {
 
 <?php if ($showTopbar): ?>
 <header class="site-header" role="banner">
-  <div class="site-header-inner">
+  <div class="site-container site-header-inner">
     <a href="<?= url('/') ?>" class="header-brand" aria-label="CS Department Portal home">
       <?= siteLogo(52) ?>
       <div class="header-brand-text">
