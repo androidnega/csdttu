@@ -1,0 +1,8 @@
+# Admin credentials (generated on first login)
+data/settings.json
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp

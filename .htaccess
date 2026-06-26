@@ -1,0 +1,12 @@
+Options -Indexes
+RewriteEngine On
+
+# Block direct access to includes, data, views directories
+RewriteRule ^(includes|data|views)(/|$) - [F,L]
+
+# Serve real files and directories directly (assets etc.)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Route everything else through the PHP router
+RewriteRule ^ index.php [L,QSA]
